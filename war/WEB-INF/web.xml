@@ -23,7 +23,7 @@
   
    <servlet-mapping>
     <servlet-name>communicationServlet</servlet-name>
-    <url-pattern>/java_game_apcs_server/gameCommunication</url-pattern>
+    <url-pattern>/game/</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

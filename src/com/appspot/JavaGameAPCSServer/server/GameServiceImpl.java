@@ -1,31 +1,43 @@
 package com.appspot.JavaGameAPCSServer.server;
 
-import com.appspot.JavaGameAPCSServer.client.GreetingService;
-import com.appspot.JavaGameAPCSServer.shared.FieldVerifier;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GameServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+public class GameServiceImpl extends HttpServlet {
 
-	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException(
-					"Name must be at least 4 characters long");
-		}
+	@Override
+	  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	      throws IOException {
+	    if (req.getParameter("testing") == null) {
+	      resp.setContentType("text/plain");
+	      resp.getWriter().println("Hello, this is a testing servlet. \n\n");
+	      Properties p = System.getProperties();
+	      p.list(resp.getWriter());
 
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+	    } else {
+	      UserService userService = UserServiceFactory.getUserService();
+	      User currentUser = userService.getCurrentUser();
 
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent;
-	}
+	      if (currentUser != null) {
+	        resp.setContentType("text/plain");
+	        resp.getWriter().println("Hello, " + currentUser.getNickname());
+	      } else {
+	        resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
+	      }
+	    }
+	  }
 
 
 }

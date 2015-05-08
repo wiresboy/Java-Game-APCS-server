@@ -1,1 +1,4 @@
 gwt-unitCache/
+*.class
+*.class
+war/WEB-INF/classes/com/appspot/JavaGameAPCSServer/server/GameServiceImpl.class

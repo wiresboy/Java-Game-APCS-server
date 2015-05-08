@@ -34,7 +34,9 @@ public class GameServiceImpl extends HttpServlet {
 		out.println("game: "+req.getParameter("game"));
 		out.println("me: "+req.getParameter("me"));
 		out.println("it: "+req.getParameter("it"));
-		out.print(input);
+		out.println("meData: "+req.getParameter("meData"));
+		out.println("Data To Me: "+"(not yet implemented)");
+		
 		
 	}
 

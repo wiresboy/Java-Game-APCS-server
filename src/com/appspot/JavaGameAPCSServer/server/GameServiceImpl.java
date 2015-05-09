@@ -36,9 +36,10 @@ public class GameServiceImpl extends HttpServlet {
 		String itUName = req.getParameter("it");
 		
 		GameSingleStore game = GamesStore.getGame(gameMap, myUName,  itUName);
+		
 		if (game == null)
 		{	//generate a new game
-			
+			game = GamesStore.newGame(gameMap, myUName, itUName, myData);
 			
 		}
 		else //update game data and return it.

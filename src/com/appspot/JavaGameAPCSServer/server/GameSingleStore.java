@@ -5,13 +5,15 @@ import java.util.ArrayList;
 public class GameSingleStore {
 	private String gameMap;
 	private String player1Name,player2Name;
-	private String player1Data,player2Data;
+	private String player1Data="",player2Data="";
 	private ArrayList<String> updatesFromPlayer1 = new ArrayList<String>();
 	private ArrayList<String> updatesFromPlayer2 = new ArrayList<String>();
-	
+	private long lastUpdatedTimeMilli;
+	private static final int minRefreshPeriodMillieconds = 1000;
 	
 	GameSingleStore(String gameMap, String player1Name, String player2Name)
 	{
+		
 		this.gameMap = gameMap;
 		if (player1Name.compareTo(player2Name)<0)//order names properly
 		{
@@ -23,6 +25,29 @@ public class GameSingleStore {
 			this.player1Name = player2Name;
 			this.player2Name = player1Name;
 		}
+	}
+	
+	GameSingleStore(String gameMap, String player1Name, String player2Name, String playerData)
+	{
+		this(gameMap, player1Name, player2Name);
+		
+		String[] playerDataSplit = playerData.split(":");//split portions of data, everything after a ":" is a message for the other player. 
+		if (this.player1Name.equals(player1Name))//this is player one who is making the request
+		{
+			player1Data = playerDataSplit[0];
+			if (playerDataSplit.length>0)
+				for (int i = 1; i<playerDataSplit.length; i++)
+					updatesFromPlayer1.add(playerDataSplit[i]);
+		}
+		else//this is player2 making the request. 
+		{
+			player2Data = playerDataSplit[0];
+			if (playerDataSplit.length>0)
+				for (int i = 1; i<playerDataSplit.length; i++)
+					updatesFromPlayer1.add(playerDataSplit[i]);
+		}
+		
+		
 	}
 	
 	public boolean isCorrectGame(String gameMap, String player1Name, String player2Name){
@@ -45,6 +70,9 @@ public class GameSingleStore {
 			System.out.println("Whoah! Somehow you are trying to access the wrong game save!");
 			return null;
 		}
+		
+		updateTimeLog();
+		
 		String[] playerDataSplit = playerData.split(":");//split portions of data, everything after a ":" is a message for the other player. 
 		if (this.player1Name.equals(playerName))//this is player one who is making the request, return data about player 2.
 		{
@@ -81,5 +109,19 @@ public class GameSingleStore {
 		return ret;
 	}
 	
+	private void updateTimeLog()
+	{
+		lastUpdatedTimeMilli = currentTime();
+	}
 	
+	public boolean isToOld()
+	{
+		long currentTimeMilli = currentTime();
+		return (lastUpdatedTimeMilli + minRefreshPeriodMillieconds < currentTimeMilli);
+	}
+	
+	private long currentTime()
+	{
+		return (new java.util.Date()).getTime();
+	}
 }

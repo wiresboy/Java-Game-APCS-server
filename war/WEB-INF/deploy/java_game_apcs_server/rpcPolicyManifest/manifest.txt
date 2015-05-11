@@ -1,2 +1,3 @@
 # Module java_game_apcs_server
 # RPC service class, partial path of RPC policy file
+com.appspot.JavaGameAPCSServer.client.GreetingService, F3B8D0D5D3C1D0385AE41000F3D22B04.gwt.rpc

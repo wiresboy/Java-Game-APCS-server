@@ -1,0 +1,2 @@
+serviceClass: com.appspot.JavaGameAPCSServer.client.GreetingService
+path: F3B8D0D5D3C1D0385AE41000F3D22B04.gwt.rpc

@@ -15,7 +15,7 @@ public class GameServiceImpl extends HttpServlet {
 		String method = getServletConfig().getInitParameter("action");
 		if ("end".equals(method))
 		{
-			
+			endGame(req, resp);
 		}
 		else if ("update".equals(method))
 		{

@@ -24,7 +24,7 @@ public class GameServiceImpl extends HttpServlet {
 		else
 		{
 			System.out.println("Method Failure: invalid method. Received \""+method+"\"");
-		}		
+		}	
 		
 	}
 	
@@ -34,7 +34,12 @@ public class GameServiceImpl extends HttpServlet {
 		String myUName = req.getParameter("me");
 		String myData = req.getParameter("meData");
 		String itUName = req.getParameter("it");
-		
+
+		//System.out.println(gameMap+myUName+myData+itUName);
+		//out.write("Game = "+gameMap);
+		//out.write("me = "+myUName);
+		//out.write("it = "+itUName);
+		//out.write("meData = "+myData);
 		GameSingleStore game = GamesStore.getGame(gameMap, myUName,  itUName);
 		
 		if (game == null)
@@ -46,6 +51,11 @@ public class GameServiceImpl extends HttpServlet {
 		{
 			String responseDat = game.updateAndGetPlayerData(gameMap, myUName, itUName, myData);
 			out.write(responseDat);
+			/*out.write("Game = "+gameMap);
+			out.write("me = "+myUName);
+			out.write("it = "+itUName);
+			out.write("meData = "+myData);
+			out.write("GS Game = "+game);//*/
 		}
 	}
 

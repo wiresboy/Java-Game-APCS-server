@@ -5,43 +5,48 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.appspot.JavaGameAPCSServer.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>communicationServlet</servlet-name>
-    <servlet-class>com.appspot.JavaGameAPCSServer.server.GameServiceImpl</servlet-class>
-  </servlet>
-  
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>com.appspot.JavaGameAPCSServer.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>communicationServletUpdate</servlet-name>
+		<servlet-class>com.appspot.JavaGameAPCSServer.server.GameServiceImpl</servlet-class>
+    	<init-param>
+			<param-name>action</param-name>
+			<param-value>update</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>communicationServletEnd</servlet-name>
+		<servlet-class>com.appspot.JavaGameAPCSServer.server.GameServiceImpl</servlet-class>
+    	<init-param>
+			<param-name>action</param-name>
+			<param-value>end</param-value>
+		</init-param>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/java_game_apcs_server/greet</url-pattern>
   	</servlet-mapping>
   
    	<servlet-mapping>
-   		<servlet-name>communicationServlet</servlet-name>
+   		<servlet-name>communicationServletUpdate</servlet-name>
     	<url-pattern>/game/update/</url-pattern>
-    	<init-param>
-			<param-name>action</param-name>
-			<param-value>update</param-value>
-		</init-param>
 	</servlet-mapping>
 	
    	<servlet-mapping><!-- use this to mark a game as finished. Not required, but may be cheaper for me.  -->
-   		<servlet-name>communicationServlet</servlet-name>
+   		<servlet-name>communicationServletEnd</servlet-name>
     	<url-pattern>/game/end/</url-pattern>
-    	<init-param>
-			<param-name>action</param-name>
-			<param-value>end</param-value>
-		</init-param>
 	</servlet-mapping>
 	
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Java_Game_APCS_server.html</welcome-file>
-  </welcome-file-list>
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Java_Game_APCS_server.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

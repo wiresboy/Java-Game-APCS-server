@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GameServiceImpl extends HttpServlet {
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String method = getServletConfig().getInitParameter("action");
 		if ("end".equals(method))
 		{

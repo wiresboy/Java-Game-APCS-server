@@ -35,16 +35,16 @@ public class GameSingleStore {
 		if (this.player1Name.equals(player1Name))//this is player one who is making the request
 		{
 			player1Data = playerDataSplit[0];
-			if (playerDataSplit.length>0)
+			if (playerDataSplit.length>1)
 				for (int i = 1; i<playerDataSplit.length; i++)
 					updatesFromPlayer1.add(playerDataSplit[i]);
 		}
 		else//this is player2 making the request. 
 		{
 			player2Data = playerDataSplit[0];
-			if (playerDataSplit.length>0)
+			if (playerDataSplit.length>1)
 				for (int i = 1; i<playerDataSplit.length; i++)
-					updatesFromPlayer1.add(playerDataSplit[i]);
+					updatesFromPlayer2.add(playerDataSplit[i]);
 		}
 		
 		
@@ -77,21 +77,19 @@ public class GameSingleStore {
 		if (this.player1Name.equals(playerName))//this is player one who is making the request, return data about player 2.
 		{
 			player1Data = playerDataSplit[0];
-			if (playerDataSplit.length>0)
+			if (playerDataSplit.length>1)
 				for (int i = 1; i<playerDataSplit.length; i++)
 					updatesFromPlayer1.add(playerDataSplit[i]);
 			
-			if (updatesFromPlayer2.size()>0)
-				return player2Data + ":" + updatesFromPlayer2.remove(0);
-			return player2Data;
+			return player2Data + generateUpdateString(updatesFromPlayer2);
 		}
 		else//this is player2 making the request. Return player1's data plus updates made by them. 
 		{
 			player2Data = playerDataSplit[0];
 			
-			if (playerDataSplit.length>0)
+			if (playerDataSplit.length>1)
 				for (int i = 1; i<playerDataSplit.length; i++)
-					updatesFromPlayer1.add(playerDataSplit[i]);
+					updatesFromPlayer2.add(playerDataSplit[i]);
 			
 			
 			return player1Data + generateUpdateString(updatesFromPlayer1);
@@ -101,10 +99,9 @@ public class GameSingleStore {
 	private String generateUpdateString(ArrayList<String> updates)
 	{
 		String ret = "";
-		if (updates.size()>1)
+		while (updates.size()>0)
 		{
-			for (int i = 0; i<updates.size(); i++)
-				ret += ":" + updates.remove(i);
+			ret += ":" + updates.remove(0);
 		}
 		return ret;
 	}
